@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz App</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background:#1e293b;
+padding:30px;
+border-radius:10px;
+width:400px;
+text-align:center;
+}
+
+button{
+display:block;
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+background:#334155;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#22c55e;
+}
+
+#next{
+background:#22c55e;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🧠 Quiz App</h2>
+
+<div id="question"></div>
+
+<div id="answers"></div>
+
+<button id="next" onclick="nextQuestion()">Next</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const quiz = [
+{
+question: "What is JavaScript?",
+answers: ["Programming Language","Database","OS","Browser"],
+correct: 0
+},
+{
+question: "Which company developed JS?",
+answers: ["Google","Microsoft","Netscape","Apple"],
+correct: 2
+},
+{
+question: "Which keyword declares variable?",
+answers: ["int","var","define","dim"],
+correct: 1
+}
+]
+
+let current = 0
+let score = 0
+
+function loadQuestion(){
+
+let q = quiz[current]
+
+document.getElementById("question").innerText = q.question
+
+let answersHTML = ""
+
+q.answers.forEach((ans,i)=>{
+answersHTML += `<button onclick="selectAnswer(${i})">${ans}</button>`
+})
+
+document.getElementById("answers").innerHTML = answersHTML
+
+}
+
+function selectAnswer(index){
+
+if(index === quiz[current].correct){
+score++
+}
+
+}
+
+function nextQuestion(){
+
+current++
+
+if(current < quiz.length){
+loadQuestion()
+}else{
+document.getElementById("question").innerText = "Quiz Finished 🎉"
+document.getElementById("answers").innerHTML = ""
+document.getElementById("next").style.display = "none"
+document.getElementById("result").innerText =
+"Your Score: " + score + "/" + quiz.length
+}
+
+}
+
+loadQuestion()
+
+</script>
+
+</body>
+</html>
